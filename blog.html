@@ -3,97 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="blog.css">
     <title>Блог</title>
 </head>
 <body>
     <header>
         <nav>
+            <div class="logo">Name-folio</div>
             <ul>
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="blog.html" aria-current="page">Блог</a></li> 
+                <li><a href="index.html">Обо мне</a></li>
+                <li><a href="blog.html" aria-current="page">Блог</a></li>
+                <li><a href="index.html#contact">Контакты</a></li>
             </ul>
         </nav>
     </header>
+
     <main>
-        <section>
+        <section class="blog-articles">
             <h1>Статьи</h1>
-            <article>
-                <h3>Как я подключал DS18B20 к ESP32 через OneWire</h3>
-                <small><time datetime="2025-03-12">12 марта 2025</time></small>
-                <p>Описание проблем с драйверами, настройка ESP-IDF и первые успешные замеры температуры.</p>
+
+            <article class="featured">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop" alt="ESP32 и датчик">
+                <div>
+                    <h3>Как я подключал DS18B20 к ESP32 через OneWire</h3>
+                    <small><time datetime="2025-03-12">12 марта 2025</time></small>
+                    <p>Описание проблем с драйверами, настройка ESP-IDF и первые успешные замеры температуры.</p>
+                </div>
             </article>
-            <article>
-                <h3>Flexbox без боли: верстаем форму за 5 минут</h3>
-                <small><time datetime="2025-02-28">28 февраля 2025</time></small>
-                <p>Простое руководство по выравниванию элементов формы с помощью CSS Flexbox для новичков.</p>
-            </article>
-            <article>
-                <h3>Zero-Knowledge Proofs: почему это не магия</h3>
-                <small><time datetime="2025-02-15">15 февраля 2025</time></small>
-                <p>Разбираем протокол доказательства наличия гамильтонова цикла на простом примере с графами.</p>
-            </article>
-            <article>
-                <h3>Мой первый проект на Go: сканер портов</h3>
-                <small><time datetime="2025-02-03">3 февраля 2025</time></small>
-                <p>Пишем многопоточный сканер портов на Go с таймаутами и красивым выводом результатов.</p>
-            </article>
-            <article>
-                <h3>Настройка Git: от базовой конфигурации до SSH-ключей</h3>
-                <small><time datetime="2025-01-20">20 января 2025</time></small>
-                <p>Пошаговая инструкция по настройке Git для комфортной работы с GitHub и GitLab.</p>
-            </article>
-            <article>
-                <h3>Arduino vs ESP32: что выбрать для старта?</h3>
-                <small><time datetime="2025-01-05">5 января 2025</time></small>
-                <p>Сравниваю две популярные платформы для начинающих в мире микроконтроллеров.</p>
-            </article>
-            <article>
-                <h3>HTML5 семантика: почему важно использовать правильные теги</h3>
-                <small><time datetime="2024-12-18">18 декабря 2024</time></small>
-                <p>Разбираемся в семантических тегах HTML5 и их влиянии на SEO и доступность.</p>
-            </article>
-            <article>
-                <h3>Python для начинающих: первые шаги</h3>
-               <small><time datetime="2024-12-02">2 декабря 2024</time></small>
-                <p>Установка Python, настройка окружения и первые программы: от Hello World до простых скриптов.</p>
-            </article>
-            <article>
-                <h3>Как я готовился к сессии: тайм-менеджмент для студента</h3>
-                <small><time datetime="2024-11-15">15 ноября 2024</time></small>
-                <p>Делюсь лайфхаками по организации времени во время учёбы в СибГУТИ.</p>
-            </article>
-            <article>
-                <h3>CSS Grid: создаём адаптивную сетку за 10 минут</h3>
-                <small><time datetime="2024-11-01">1 ноября 2024</time></small>
-                <p>Практическое руководство по CSS Grid Layout на примере создания галереи статей.</p>
-            </article>
-        </section>
-        <section>
-            <h2>Создать статью</h2>
-            <form action="#" method="POST">
-                <div><input type="text" placeholder="Заголовок" name="title" required></div>
-                <div><textarea placeholder="Текст статьи" name="content" rows="10" required></textarea></div>
-                <div><button type="submit">Добавить</button></div>
-            </form>
+
+            <div class="articles-grid">
+                <article>
+                    <img src="https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=400&h=280&fit=crop" alt="Код на экране">
+                    <h3>Flexbox без боли: верстаем форму за 5 минут</h3>
+                    <small><time datetime="2025-02-28">28 февраля 2025</time></small>
+                    <p>Простое руководство по выравниванию элементов формы с помощью CSS Flexbox для новичков.</p>
+                </article>
+                <article>
+                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=280&fit=crop" alt="Криптография">
+                    <h3>Zero-Knowledge Proofs: почему это не магия</h3>
+                    <small><time datetime="2025-02-15">15 февраля 2025</time></small>
+                    <p>Разбираем протокол доказательства наличия гамильтонова цикла на простом примере с графами.</p>
+                </article>
+                <article>
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=280&fit=crop" alt="Go">
+                    <h3>Мой первый проект на Go: сканер портов</h3>
+                    <small><time datetime="2025-02-03">3 февраля 2025</time></small>
+                    <p>Пишем многопоточный сканер портов на Go с таймаутами и красивым выводом результатов.</p>
+                </article>
+                <article>
+                    <img src="https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=400&h=280&fit=crop" alt="Git">
+                    <h3>Настройка Git: от базовой конфигурации до SSH-ключей</h3>
+                    <small><time datetime="2025-01-20">20 января 2025</time></small>
+                    <p>Пошаговая инструкция по настройке Git для комфортной работы с GitHub и GitLab.</p>
+                </article>
+                <article>
+                    <img src="https://images.unsplash.com/photo-1553406830-ef2513450d76?w=400&h=280&fit=crop" alt="Микроконтроллер">
+                    <h3>Arduino vs ESP32: что выбрать для старта?</h3>
+                    <small><time datetime="2025-01-05">5 января 2025</time></small>
+                    <p>Сравниваю две популярные платформы для начинающих в мире микроконтроллеров.</p>
+                </article>
+                <article>
+                    <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=400&h=280&fit=crop" alt="HTML код">
+                    <h3>HTML5 семантика: почему важно использовать правильные теги</h3>
+                    <small><time datetime="2024-12-18">18 декабря 2024</time></small>
+                    <p>Разбираемся в семантических тегах HTML5 и их влиянии на SEO и доступность.</p>
+                </article>
+            </div>
+
+            <div class="pagination">
+                <a href="#" class="pagination-btn">Далее &rarr;</a>
+            </div>
         </section>
     </main>
+
     <footer>
         <div>
-            <address>
-                <h2>Контакты</h2>
-                <p>Email: <a href="mailto:pl3shkov.m@yandex.ru">pl3shkov.m@yandex.ru</a></p>
-                <p>Телефон: <a href="tel:+79997776655">+7 999 777 66 55</a></p>
-            </address>
-            <h2>Социальные Сети</h2>
-            <p>
-                <a href="#">Instagram </a> |
-                <a href="#"> Telegram </a> |
-                <a href="#"> VK </a> |
-                <a href="#"> GitHub</a>
-            </p>
+            <div>
+                <h2>Связь</h2>
+                <address>
+                    <p>Email: <a href="mailto:pl3shkov.m@yandex.ru">pl3shkov.m@yandex.ru</a></p>
+                    <p>Телефон: <a href="tel:+79997776655">+7 999 777 66 55</a></p>
+                </address>
+                <p class="social-icons">
+                    <a href="#"><img src="https://cdn.simpleicons.org/vk/ffffff" alt="VK" width="24" height="24"></a>
+                    <a href="#"><img src="https://cdn.simpleicons.org/telegram/ffffff" alt="Telegram" width="24" height="24"></a>
+                    <a href="#"><img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub" width="24" height="24"></a>
+                </p>
+            </div>
+            <form action="#" method="POST">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Ваш email">
+                <label for="message">Сообщение</label>
+                <textarea id="message" name="message" rows="4" placeholder="Опишите ваш проект"></textarea>
+                <button type="submit">Отправить</button>
+            </form>
         </div>
+        <small>&copy; 2026 Name-folio</small>
     </footer>
-
-
 </body>
 </html>
