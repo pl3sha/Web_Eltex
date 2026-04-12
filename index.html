@@ -3,108 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
     <title>Главная</title>
 </head>
 <body>
     <header>
         <nav>
+            <div class="logo">Name-folio</div>
             <ul>
-                <li><a href="index.html" aria-current="page">Главная</a></li>
-                <li><a href="blog.html">Блог</a></li> 
+                <li><a href="index.html" class="nav-link" aria-current="page">Обо мне</a></li>
+                <li><a href="blog.html" class="nav-link">Блог</a></li>
+                <li><a href="#contact" class="nav-link">Контакты</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <section>
-            <h1>Обо мне</h1>
-            <p>Добро пожаловать! Я пока что НЕ веб-разработчик с 5-летним опытом в создании интерактивных интерфейсов.
-                Но на этом блоге я делюсь своими знаниями и начинаниями.
-                Здесь вы найдёте интересную информацию, узнаете про меня и про мой путь!</p>
-            <img src="https://i.pinimg.com/236x/96/d0/5f/96d05f99f9c234972c5ee6f5515a8b56.jpg" alt="Красивая сова"/>
+
+    <main class="container">
+        <section class="about-section">
+            <div>
+                <h1>Обо мне</h1>
+                <p>Добро пожаловать! Я пока что НЕ веб-разработчик с 5-летним опытом в создании интерактивных интерфейсов.
+                    Но на этом блоге я делюсь своими знаниями и начинаниями.
+                    Здесь вы найдёте интересную информацию, узнаете про меня и про мой путь!</p>
+                <a href="blog.html" class="more-link">Подробнее обо мне ›</a>
+            </div>
+            <img src="image/owl.jpg" alt="Красивая сова"/>
         </section>
-        <section>
-            <article>
-                <h2>Моя карьера</h2>
-                <h3>Текущая должность</h3>
-                <p>Ученик Школы EltexSchool, хороший парень</p>
-            </article>
-            <article>
-                <h3>Опыт работы:</h3>
-                <strong>Цветочный магазин</strong>
-                <p>Помогал маме в цветочном магазине каждое 8 марта</p>
-                <strong>Петропавловск-Камчатский</strong>
-                <p>Рыбачил, работал на заводе</p>
-                <strong>Системный администратор (стажировка)</strong>
-                <p>Настройка локальной сети, помощь пользователям, документация</p>
-            </article>
-            <article>
-                <h3>Образование:</h3>
-                <strong>СибГУТИ</strong>
-                <p>Сибирский Государственный Университет Телекоммуникаций и Информатики, 09.03.01 Информатика и вычислительная техника</p>
-            </article>
-            <article>
-                <h3>Курсы и сертификаты:</h3>
-                <ul>
-                    <li>«Введение в веб-разработку» — Stepik, 2024</li>
-                    <li>«Основы Embedded Systems» — EltexSchool, 2025</li>
-                    <li>«Git и контроль версий» — Hexlet, 2024</li>
-                    <li>«Английский для IT-специалистов» — Яндекс.Практикум, 2023</li>
-                </ul>
-            </article>
-            <article>
-                <h3>Навыки:</h3>
-                <ul>
-                    <li>HTML5, CSS3, базовый JavaScript</li>
-                    <li>Языки: C, Python, Go (изучаю)</li>
-                    <li>Работа с микроконтроллерами: ESP32, Arduino</li>
-                </ul>
-            </article>
-            <article>
-                <h3>Достижения:</h3>
-                <ul>
-                    <li>Успешно завершил лабораторные по протоколам нулевого разглашения</li>
-                    <li>Реализовал проект умной метеостанции на ESP32 с выводом на LCD</li>
-                    <li>Победитель внутреннего хакатона по веб-формам в EltexSchool</li>
-                    <li>Написал консольный сканер портов на Go с поддержкой многопоточности</li>
-                </ul>
-            </article>
-        </section>
-        <section>
+
+        <section class="articles-section">
             <h2>Последние Статьи</h2>
+
             <article>
-                <h3>Как я подключал DS18B20 к ESP32 через OneWire</h3>
-                <small><time datetime="2025-03-12">12 марта 2025</time></small>
-                <p>Описание проблем с драйверами, настройка ESP-IDF и первые успешные замеры температуры.</p>
+                <img src="image/esp32.jpg" alt="ESP32 и датчик">
+                <div>
+                    <h3>Как я подключал DS18B20 к ESP32 через OneWire</h3>
+                    <small><time datetime="2025-03-12">12 марта 2025</time></small>
+                    <p>Описание проблем с драйверами, настройка ESP-IDF и первые успешные замеры температуры.</p>
+                </div>
             </article>
+
             <article>
-                <h3>Flexbox без боли: верстаем форму за 5 минут</h3>
-                <small><time datetime="2025-02-28">28 февраля 2025</time></small>
-                <p>Простое руководство по выравниванию элементов формы с помощью CSS Flexbox для новичков.</p>
+                <img src="image/code.jpg" alt="Код на экране">
+                <div>
+                    <h3>Flexbox без боли: верстаем форму за 5 минут</h3>
+                    <small><time datetime="2025-02-28">28 февраля 2025</time></small>
+                    <p>Простое руководство по выравниванию элементов формы с помощью CSS Flexbox для новичков.</p>
+                </div>
             </article>
+
             <article>
-                <h3>Zero-Knowledge Proofs: почему это не магия</h3>
-                <small><time datetime="2025-02-15"> 15 февраля 2025</time></small>
-                <p>Разбираем протокол доказательства наличия гамильтонова цикла на простом примере с графами.</p>
+                <img src="image/crypto.jpg" alt="Криптография">
+                <div>
+                    <h3>Zero-Knowledge Proofs: почему это не магия</h3>
+                    <small><time datetime="2025-02-15">15 февраля 2025</time></small>
+                    <p>Разбираем протокол доказательства наличия гамильтонова цикла на простом примере с графами.</p>
+                </div>
             </article>
+
             <a href="blog.html">Посмотреть все статьи</a>
         </section>
-    </main>
-    <footer>
-        <div>
-            <address>
-                <h2>Контакты</h2>
-                <p>Email: <a href="mailto:pl3shkov.m@yandex.ru">pl3shkov.m@yandex.ru</a></p>
-                <p>Телефон: <a href="tel:+79997776655">+7 999 777 66 55</a></p>
-            </address>
-            <h2>Социальные Сети</h2>
-            <p>
-                <a href="#">Instagram </a> |
-                <a href="#"> Telegram </a> |
-                <a href="#"> VK </a> |
-                <a href="#"> GitHub</a>
-            </p>
-        </div>
-    </footer>
 
+        <section class="skills-section">
+            <h2>Навыки</h2>
+            <div class="skills-grid">
+                <div class="skill-item">HTML5, CSS3, базовый JavaScript</div>
+                <div class="skill-item">Языки: C, Python, Go (изучаю)</div>
+                <div class="skill-item">Работа с микроконтроллерами: ESP32, Arduino</div>
+            </div>
+        </section>
+
+        <section class="career-section">
+            <div class="career-header">
+                <h2>Моя карьера</h2>
+                <p>Ученик Школы EltexSchool, хороший парень</p>
+            </div>
+            <div class="career-list">
+                <article>
+                    <small>Опыт работы</small>
+                    <strong>Цветочный магазин</strong>
+                    <p>Помогал маме в цветочном магазине каждое 8 марта</p>
+                </article>
+                <article>
+                    <small>Опыт работы</small>
+                    <strong>Петропавловск-Камчатский</strong>
+                    <p>Рыбачил, работал на заводе</p>
+                </article>
+                <article>
+                    <small>Стажировка</small>
+                    <strong>Системный администратор</strong>
+                    <p>Настройка локальной сети, помощь пользователям, документация</p>
+                </article>
+                <article>
+                    <small>Образование</small>
+                    <strong>СибГУТИ</strong>
+                    <p>Сибирский Государственный Университет Телекоммуникаций и Информатики, 09.03.01 Информатика и вычислительная техника</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="hobby-section">
+            <h2>Hobby projects</h2>
+            <p>Помимо учёбы и работы, я увлекаюсь фотографией, электроникой и иногда рисую.</p>
+            <div class="hobby-grid">
+                <div class="hobby-card">
+                    <img src="image/nature.jpg" alt="Природа">
+                    <div class="overlay"><p>Фотография</p></div>
+                </div>
+                <div class="hobby-card">
+                    <img src="image/electronics.jpg" alt="Электроника">
+                    <div class="overlay"><p>Электроника</p></div>
+                </div>
+                <div class="hobby-card">
+                    <img src="image/drawing.jpg" alt="Рисование">
+                    <div class="overlay"><p>Рисование</p></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div>
+            <div>
+                <h2>Связь</h2>
+                <address>
+                    <p>Email: <a href="mailto:pl3shkov.m@yandex.ru">pl3shkov.m@yandex.ru</a></p>
+                    <p>Телефон: <a href="tel:+79997776655">+7 999 777 66 55</a></p>
+                </address>
+                <p class="social-icons">
+                    <a href="#"><img src="https://cdn.simpleicons.org/vk/ffffff" alt="VK" width="24" height="24"></a>
+                    <a href="#"><img src="https://cdn.simpleicons.org/telegram/ffffff" alt="Telegram" width="24" height="24"></a>
+                    <a href="#"><img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub" width="24" height="24"></a>
+                </p>
+            </div>
+            <form action="#" method="POST">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Ваш email">
+                <label for="message">Сообщение</label>
+                <textarea id="message" name="message" rows="4" placeholder="Опишите ваш проект"></textarea>
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+        <small>&copy; 2026 Name-folio</small>
+    </footer>
 </body>
 </html>

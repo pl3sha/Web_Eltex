@@ -1,0 +1,387 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+html {
+    scroll-behavior: smooth;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --dark: #2D3142;
+    --gray: #4F5D75;
+    --light-gray: #BFC0C0;
+    --accent-orange: #EF8354;
+    --accent-green: #4CAF50;
+    --light-green: #E8F5E9;
+    --white: #ffffff;
+    --bg-dark: #2D3142;
+    --bg-light: #f5f5f5;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--dark);
+}
+
+h1 {
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+h2 {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h3 {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: var(--dark);
+}
+
+ul { list-style: none; }
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* шапка*/
+
+header {
+    padding: 20px 60px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+header nav ul {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-link {
+    font-size: 15px;
+    color: var(--gray);
+    transition: color 0.3s ease, font-weight 0.3s ease;
+    padding-bottom: 3px;
+}
+
+.nav-link:hover {
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.nav-link[aria-current="page"] {
+    color: var(--accent-green);
+    font-weight: 700;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+/* заголовок блога */
+
+.blog-articles {
+    padding: 60px 0 50px;
+}
+
+.blog-articles > h1 {
+    margin-bottom: 30px;
+    color: var(--dark);
+}
+
+/* главная статья */
+
+article.featured {
+    display: flex;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg-light);
+    margin-bottom: 40px;
+}
+
+article.featured img {
+    width: 50%;
+    min-height: 320px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+article.featured div {
+    padding: 35px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+article.featured h3 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+article.featured p {
+    color: var(--gray);
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+article.featured small {
+    color: var(--gray);
+    font-size: 13px;
+}
+
+/* сетка карточек */
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.articles-grid article {
+    cursor: pointer;
+}
+
+.articles-grid article img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    transition: transform 0.3s ease;
+}
+
+.articles-grid article:hover img {
+    transform: scale(1.03);
+}
+
+.articles-grid article h3 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 6px;
+    color: var(--dark);
+}
+
+.articles-grid article small {
+    color: var(--gray);
+    font-size: 13px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.articles-grid article p {
+    color: var(--gray);
+    font-size: 14px;
+    display: none;
+}
+
+/* пагинация */
+
+.pagination {
+    text-align: center;
+    padding: 40px 0 20px;
+}
+
+.pagination-btn {
+    display: inline-block;
+    padding: 12px 35px;
+    border: 1px solid var(--accent-green);
+    border-radius: 25px;
+    color: var(--accent-green);
+    font-size: 15px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover {
+    background: var(--accent-green);
+    color: var(--white);
+}
+
+/*футер*/
+
+footer {
+    background: var(--bg-dark);
+    color: var(--white);
+    padding: 60px;
+    margin-top: 50px;
+}
+
+footer > div {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+footer h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--white);
+}
+
+footer form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 350px;
+}
+
+footer form label {
+    font-size: 14px;
+    color: var(--light-gray);
+}
+
+footer form input,
+footer form textarea {
+    background: transparent;
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    padding: 12px 14px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+}
+
+footer form input::placeholder,
+footer form textarea::placeholder {
+    color: var(--gray);
+}
+
+footer form button {
+    padding: 14px 35px;
+    background: var(--accent-green);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    align-self: flex-start;
+    transition: background 0.3s ease;
+}
+
+footer form button:hover {
+    background: #43a047;
+}
+
+footer > small {
+    display: block;
+    max-width: 1200px;
+    margin: 30px auto 0;
+    font-size: 13px;
+    color: var(--gray);
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-icons a {
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: var(--accent-green);
+}
+
+footer address {
+    font-style: normal;
+}
+
+footer p {
+    margin: 5px 0;
+    font-size: 15px;
+    color: var(--white);
+}
+
+footer a {
+    color: var(--accent-green);
+    text-decoration: underline;
+    transition: color 0.25s;
+}
+
+footer a:hover {
+    color: var(--accent-orange);
+}
+
+/* адаптив*/
+@media (max-width: 800px) {
+    .articles-grid {
+        grid-template-columns: 1fr;
+    }
+
+    article.featured {
+        flex-direction: column;
+    }
+
+    article.featured img {
+        width: 100%;
+        min-height: 200px;
+    }
+
+    .container {
+        padding: 0 20px;
+    }
+
+    header {
+        padding: 15px 20px;
+    }
+
+    h1 { font-size: 36px; }
+
+    footer {
+        padding: 40px 20px;
+    }
+
+    footer > div {
+        flex-direction: column;
+    }
+
+    footer form { min-width: auto; }
+}
