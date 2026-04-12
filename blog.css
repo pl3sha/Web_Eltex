@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
+html {
+    scroll-behavior: smooth;
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -88,24 +92,24 @@ header nav ul {
     gap: 30px;
 }
 
-header nav ul li a {
+.nav-link {
     font-size: 15px;
     color: var(--gray);
     transition: color 0.3s ease, font-weight 0.3s ease;
     padding-bottom: 3px;
 }
 
-header nav ul li a:hover {
+.nav-link:hover {
     font-weight: 700;
     color: var(--dark);
 }
 
-header nav ul li a[aria-current="page"] {
+.nav-link[aria-current="page"] {
     color: var(--accent-green);
     font-weight: 700;
 }
 
-main {
+.container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 60px;
@@ -361,7 +365,7 @@ footer a:hover {
         min-height: 200px;
     }
 
-    main {
+    .container {
         padding: 0 20px;
     }
 
