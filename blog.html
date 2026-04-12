@@ -73,8 +73,53 @@
             <div class="pagination">
                 <a href="#" class="pagination-btn">Далее &rarr;</a>
             </div>
+
+            <section class="article-form-section" id="article-form-section">
+                <h2>Добавить статью</h2>
+                <form class="article-form" id="article-form">
+                    <label for="article-title">Заголовок</label>
+                    <input type="text" id="article-title" name="title" placeholder="Заголовок статьи" required>
+                    <label for="article-text">Текст статьи</label>
+                    <textarea id="article-text" name="text" placeholder="Текст статьи" required></textarea>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-add">Сохранить</button>
+                        <button type="button" class="btn-cancel" id="btn-cancel">Отмена</button>
+                    </div>
+                </form>
+            </section>
         </section>
     </main>
+
+    <aside class="admin-panel">
+        <button class="admin-btn" id="btn-create" title="Создать статью">+</button>
+        <button class="admin-btn" id="btn-stats" title="Показать статистику">&#8801;</button>
+    </aside>
+
+    <dialog id="stats-dialog">
+        <button class="dialog-close" id="dialog-close">&times;</button>
+        <h2>Статистика страницы</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span>Всего статей:</span>
+                <strong id="post-count">0</strong>
+            </div>
+            <div class="stat-card">
+                <span>Комментарии:</span>
+                <strong>0</strong>
+            </div>
+        </div>
+    </dialog>
+
+    <template id="article-template">
+        <article>
+            <img src="image/nature.jpg" alt="Новая статья">
+            <h3>Новая статья</h3>
+            <small><time datetime="2025-04-12">12 апреля 2025</time></small>
+            <p>Описание новой статьи</p>
+        </article>
+    </template>
+
+    <script src="blog.js"></script>
 
     <footer>
         <div>
