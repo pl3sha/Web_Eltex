@@ -252,6 +252,15 @@ article.featured:hover .btn-delete,
     display: none;
 }
 
+/* пустое состояние блога */
+
+.empty-state {
+    text-align: center;
+    color: var(--gray);
+    font-size: 16px;
+    padding: 120px 20px;
+}
+
 /* пагинация */
 
 .pagination {

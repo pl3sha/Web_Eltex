@@ -1,5 +1,9 @@
-const articlesGrid = document.querySelector('.articles-grid');
-const featuredArticle = document.querySelector('article.featured');
+const STORAGE_KEY = 'blog-articles';
+const DEFAULT_IMAGE = 'image/nature.jpg';
+
+const articlesGrid = document.getElementById('articles-grid');
+const emptyState = document.getElementById('empty-state');
+const pagination = document.getElementById('pagination');
 const formSection = document.getElementById('article-form-section');
 const articleForm = document.getElementById('article-form');
 const titleInput = document.getElementById('article-title');
@@ -17,15 +21,53 @@ const monthsRu = [
     'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
 ];
 
-let postCount = articlesGrid.querySelectorAll('article').length
-    + (featuredArticle ? 1 : 0);
+let articles = loadArticles();
 
-function formatRuDate(date) {
-    return `${date.getDate()} ${monthsRu[date.getMonth()]} ${date.getFullYear()}`;
+function loadArticles() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch {
+        return [];
+    }
 }
 
-function attachDeleteButton(article) {
-    if (article.querySelector(':scope > .btn-delete')) return;
+function saveArticles() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+}
+
+function generateId() {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        return crypto.randomUUID();
+    }
+    return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function formatRuDate(isoDate) {
+    const d = new Date(isoDate);
+    return `${d.getDate()} ${monthsRu[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function createArticleElement(data) {
+    const article = template.content.firstElementChild.cloneNode(true);
+    article.dataset.id = data.id;
+
+    article.querySelector('h3').textContent = data.title;
+    article.querySelector('p').textContent = data.text;
+
+    const timeEl = article.querySelector('time');
+    if (timeEl) {
+        timeEl.setAttribute('datetime', data.date);
+        timeEl.textContent = formatRuDate(data.date);
+    }
+
+    const img = article.querySelector('img');
+    if (img) {
+        img.src = data.image || DEFAULT_IMAGE;
+        img.alt = data.title;
+    }
 
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -33,17 +75,35 @@ function attachDeleteButton(article) {
     btn.title = 'Удалить статью';
     btn.setAttribute('aria-label', 'Удалить статью');
     btn.textContent = '×';
-
-    btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        article.remove();
-        postCount = Math.max(0, postCount - 1);
-    });
-
+    btn.addEventListener('click', () => removeArticle(data.id));
     article.prepend(btn);
+
+    return article;
 }
 
-document.querySelectorAll('main article').forEach(attachDeleteButton);
+function render() {
+    articlesGrid.replaceChildren();
+    for (const data of articles) {
+        articlesGrid.append(createArticleElement(data));
+    }
+    const isEmpty = articles.length === 0;
+    emptyState.hidden = !isEmpty;
+    if (pagination) pagination.hidden = isEmpty;
+}
+
+function addArticle(data) {
+    articles.unshift(data);
+    saveArticles();
+    render();
+}
+
+function removeArticle(id) {
+    articles = articles.filter((a) => a.id !== id);
+    saveArticles();
+    render();
+}
+
+render();
 
 btnCreate.addEventListener('click', () => {
     formSection.classList.add('visible');
@@ -57,7 +117,7 @@ btnCancel.addEventListener('click', () => {
 });
 
 btnStats.addEventListener('click', () => {
-    postCountEl.textContent = postCount;
+    postCountEl.textContent = articles.length;
     statsDialog.showModal();
 });
 
@@ -74,24 +134,13 @@ articleForm.addEventListener('submit', (e) => {
     const text = textInput.value.trim();
     if (!title || !text) return;
 
-    const article = template.content.firstElementChild.cloneNode(true);
-
-    article.querySelector('h3').textContent = title;
-    article.querySelector('p').textContent = text;
-
-    const now = new Date();
-    const timeEl = article.querySelector('time');
-    if (timeEl) {
-        timeEl.setAttribute('datetime', now.toISOString().split('T')[0]);
-        timeEl.textContent = formatRuDate(now);
-    }
-
-    const img = article.querySelector('img');
-    if (img) img.alt = title;
-
-    attachDeleteButton(article);
-    articlesGrid.prepend(article);
-    postCount++;
+    addArticle({
+        id: generateId(),
+        title,
+        text,
+        date: new Date().toISOString().split('T')[0],
+        image: DEFAULT_IMAGE
+    });
 
     articleForm.reset();
     formSection.classList.remove('visible');
