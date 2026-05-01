@@ -1,0 +1,36 @@
+<main class="container">
+    <section class="blog-articles">
+        <h1>Статьи</h1>
+
+        @if (articles().length > 0) {
+            <div class="articles-grid">
+                @for (article of articles(); track article.id) {
+                    <app-blog-article-card
+                        [article]="article"
+                        (remove)="onRemove($event)">
+                    </app-blog-article-card>
+                }
+            </div>
+        } @else {
+            <p class="empty-state">Нет статей</p>
+        }
+
+        <app-article-form
+            #formEl
+            [class.visible]="showForm()"
+            (submitArticle)="onAdd($event)"
+            (cancel)="onCancel()">
+        </app-article-form>
+    </section>
+</main>
+
+<app-admin-panel
+    (create)="onCreate()"
+    (stats)="onShowStats()">
+</app-admin-panel>
+
+<app-stats-dialog
+    [count]="articles().length"
+    [open]="showStats()"
+    (close)="onCloseStats()">
+</app-stats-dialog>

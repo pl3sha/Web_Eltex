@@ -35,7 +35,7 @@ header nav ul {
     color: var(--dark);
 }
 
-.nav-link[aria-current="page"] {
+.nav-link.is-active {
     color: var(--accent-green);
     font-weight: 700;
 }
