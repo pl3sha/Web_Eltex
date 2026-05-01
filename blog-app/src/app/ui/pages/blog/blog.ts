@@ -108,6 +108,10 @@ export class Blog {
   }
 
   onRemove(id: string): void {
+    if (this.editingArticle()?.id === id) {
+      this.editingArticle.set(null);
+      this.showForm.set(false);
+    }
     this.articles.update((list) => list.filter((a) => a.id !== id));
   }
 
