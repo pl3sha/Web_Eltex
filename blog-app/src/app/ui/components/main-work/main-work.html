@@ -1,0 +1,15 @@
+<section class="work-section container">
+    <div class="section-header">
+        <h2>Опыт работы</h2>
+        <p>Ученик Школы EltexSchool, хороший парень</p>
+    </div>
+    <div class="career-list">
+        @for (item of items(); track item.title) {
+            <article>
+                <small>{{ item.kind }}</small>
+                <strong>{{ item.title }}</strong>
+                <p>{{ item.description }}</p>
+            </article>
+        }
+    </div>
+</section>

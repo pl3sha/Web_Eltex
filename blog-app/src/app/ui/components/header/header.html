@@ -9,7 +9,7 @@
                 <a routerLink="/blog" routerLinkActive="is-active" class="nav-link">Блог</a>
             </li>
             <li>
-                <a routerLink="/" fragment="contact" class="nav-link">Контакты</a>
+                <a class="nav-link" href="/" (click)="scrollToContacts($event)">Контакты</a>
             </li>
         </ul>
     </nav>

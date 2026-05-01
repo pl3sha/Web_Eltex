@@ -1,0 +1,8 @@
+<section class="skills-section container">
+    <h2>Навыки</h2>
+    <div class="skills-grid">
+        @for (item of items(); track item.text) {
+            <div class="skill-item">{{ item.text }}</div>
+        }
+    </div>
+</section>

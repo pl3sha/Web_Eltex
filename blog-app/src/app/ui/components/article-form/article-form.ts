@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Output, effect, inject, input } from '@angular/core';
+import {
+  booleanAttribute,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  effect,
+  inject,
+  input,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Article } from '../../../models/article';
 
@@ -12,6 +21,22 @@ const DEFAULT_IMAGE = 'image/nature.jpg';
 })
 export class ArticleForm {
   readonly editingArticle = input<Article | null>(null);
+
+  @Input({ transform: booleanAttribute })
+  set locked(value: boolean) {
+    this._locked = value;
+    if (value) {
+      this.form.disable({ emitEvent: false });
+    } else {
+      this.form.enable({ emitEvent: false });
+    }
+  }
+
+  get locked(): boolean {
+    return this._locked;
+  }
+
+  private _locked = false;
 
   @Output() submitArticle = new EventEmitter<Article>();
   @Output() cancel = new EventEmitter<void>();
@@ -43,7 +68,7 @@ export class ArticleForm {
   }
 
   onSubmit(): void {
-    if (this.form.invalid) return;
+    if (this._locked || this.form.invalid) return;
 
     const { title, description } = this.form.getRawValue();
     const trimmedTitle = title.trim();

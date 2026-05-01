@@ -1,0 +1,22 @@
+<main>
+    <app-main-hero></app-main-hero>
+
+    @if (latestArticles().length > 0) {
+        <section class="articles-section container">
+            <h2>Последние Статьи</h2>
+
+            @for (article of latestArticles(); track article.id) {
+                <app-home-article-card [article]="article"></app-home-article-card>
+            }
+
+            <div class="articles-all">
+                <a routerLink="/blog">Посмотреть все статьи</a>
+            </div>
+        </section>
+    }
+
+    <app-main-skills [items]="skillItems"></app-main-skills>
+    <app-main-work [items]="workItems"></app-main-work>
+    <app-main-education [items]="educationItems"></app-main-education>
+    <app-main-hobbies [intro]="hobbyIntro" [items]="hobbyItems"></app-main-hobbies>
+</main>

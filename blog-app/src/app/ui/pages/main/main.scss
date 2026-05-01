@@ -1,0 +1,29 @@
+.articles-section {
+    padding: 50px 0;
+}
+
+.articles-section h2 {
+    margin-bottom: 30px;
+    color: var(--dark);
+}
+
+.articles-section > .articles-all {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.articles-section > .articles-all > a {
+    display: inline-block;
+    padding: 12px 30px;
+    border: 1px solid var(--accent-green);
+    border-radius: 25px;
+    color: var(--accent-green);
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.articles-section > .articles-all > a:hover {
+    background: var(--accent-green);
+    color: var(--white);
+}

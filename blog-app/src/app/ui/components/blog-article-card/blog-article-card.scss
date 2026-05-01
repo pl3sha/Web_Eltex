@@ -1,15 +1,23 @@
 :host {
-    display: block;
+    display: flex;
+    min-width: 0;
+    height: 100%;
 }
 
 article {
     cursor: pointer;
     position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
 }
 
 article img {
     width: 100%;
     aspect-ratio: 4/3;
+    flex-shrink: 0;
     object-fit: cover;
     border-radius: 12px;
     margin-bottom: 14px;
@@ -26,6 +34,12 @@ article h3 {
     line-height: 1.4;
     margin-bottom: 6px;
     color: var(--dark);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 article small {
@@ -38,6 +52,14 @@ article small {
 article p {
     color: var(--gray);
     font-size: 14px;
+    flex: 1;
+    min-height: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 .btn-delete,

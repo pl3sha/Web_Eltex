@@ -1,9 +1,19 @@
-import { Component, ElementRef, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, computed, inject, OnInit, signal, viewChild } from '@angular/core';
+import { delay, finalize, switchMap } from 'rxjs/operators';
+import { timer } from 'rxjs';
 import { Article } from '../../../models/article';
-import { BlogArticleCard } from '../../components/blog-article-card/blog-article-card';
-import { ArticleForm } from '../../components/article-form/article-form';
+import { ArticlesQueryResult } from '../../../services/articles/articles-service.interface';
+import { ARTICLES_DATA_SERVICE } from '../../../services/articles/articles-service.token';
+import { ArticlesStoreService } from '../../../services/articles/articles-store.service';
+import { ARTICLES_PAGE_SIZE } from '../../../services/articles/articles.service';
 import { AdminPanel } from '../../components/admin-panel/admin-panel';
+import { ArticleForm } from '../../components/article-form/article-form';
+import { BlogArticleCard } from '../../components/blog-article-card/blog-article-card';
 import { StatsDialog } from '../../components/stats-dialog/stats-dialog';
+
+/** Имитация загрузки и сохранения — как в статическом blog.js */
+const INITIAL_LOAD_DELAY_MS = 1000;
+const SUBMIT_DELAY_MS = 800;
 
 @Component({
   selector: 'app-blog',
@@ -11,63 +21,41 @@ import { StatsDialog } from '../../components/stats-dialog/stats-dialog';
   templateUrl: './blog.html',
   styleUrl: './blog.scss',
 })
-export class Blog {
-  readonly articles = signal<Article[]>([
-    {
-      id: '1',
-      title: 'Как я подключал DS18B20 к ESP32 через OneWire',
-      description:
-        'Описание проблем с драйверами, настройка ESP-IDF и первые успешные замеры температуры.',
-      date: '2025-03-12',
-      image: 'image/esp32.jpg',
-    },
-    {
-      id: '2',
-      title: 'Flexbox без боли: верстаем форму за 5 минут',
-      description:
-        'Простое руководство по выравниванию элементов формы с помощью CSS Flexbox для новичков.',
-      date: '2025-02-28',
-      image: 'image/code.jpg',
-    },
-    {
-      id: '3',
-      title: 'Zero-Knowledge Proofs: почему это не магия',
-      description:
-        'Разбираем протокол доказательства наличия гамильтонова цикла на простом примере с графами.',
-      date: '2025-02-15',
-      image: 'image/crypto.jpg',
-    },
-    {
-      id: '4',
-      title: 'Микроконтроллеры для начинающих',
-      description:
-        'С чего начать знакомство с микроконтроллерами и какие платы выбрать для первых проектов.',
-      date: '2025-01-20',
-      image: 'image/microcontroller.jpg',
-    },
-    {
-      id: '5',
-      title: 'Git: рабочий процесс в команде',
-      description:
-        'Базовые команды, ветвление, разрешение конфликтов и правила командной работы.',
-      date: '2025-01-05',
-      image: 'image/git.jpg',
-    },
-    {
-      id: '6',
-      title: 'Изучаем Go: первые шаги',
-      description:
-        'Установка, синтаксис, отличия от других языков и первый микросервис на Go.',
-      date: '2024-12-18',
-      image: 'image/go.jpg',
-    },
-  ]);
+export class Blog implements OnInit {
+  private readonly store = inject(ArticlesStoreService);
+  private readonly articlesData = inject(ARTICLES_DATA_SERVICE);
 
   readonly showForm = signal(false);
   readonly showStats = signal(false);
   readonly editingArticle = signal<Article | null>(null);
+  readonly articlesLoading = signal(true);
+  readonly isSaving = signal(false);
 
   private readonly formEl = viewChild('formEl', { read: ElementRef });
+
+  readonly visibleArticles = computed(() => {
+    const all = this.store.articles();
+    const page = this.store.activePage();
+    const start = (page - 1) * ARTICLES_PAGE_SIZE;
+    return all.slice(start, start + ARTICLES_PAGE_SIZE);
+  });
+
+  readonly totalCount = computed(() => this.store.articles().length);
+
+  readonly totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.store.articles().length / ARTICLES_PAGE_SIZE)),
+  );
+
+  readonly activePage = computed(() => this.store.activePage());
+
+  ngOnInit(): void {
+    timer(INITIAL_LOAD_DELAY_MS)
+      .pipe(
+        switchMap(() => this.articlesData.fetch()),
+        finalize(() => this.articlesLoading.set(false)),
+      )
+      .subscribe((r) => this.apply(r));
+  }
 
   onCreate(): void {
     this.editingArticle.set(null);
@@ -90,16 +78,24 @@ export class Blog {
   }
 
   onSave(article: Article): void {
-    const editing = this.editingArticle();
-    if (editing) {
-      this.articles.update((list) =>
-        list.map((a) => (a.id === editing.id ? article : a)),
-      );
-    } else {
-      this.articles.update((list) => [article, ...list]);
+    if (this.isSaving()) {
+      return;
     }
-    this.editingArticle.set(null);
-    this.showForm.set(false);
+    this.isSaving.set(true);
+    const editing = this.editingArticle();
+    const req = editing
+      ? this.articlesData.update(article)
+      : this.articlesData.add(article);
+    req
+      .pipe(
+        delay(SUBMIT_DELAY_MS),
+        finalize(() => this.isSaving.set(false)),
+      )
+      .subscribe((r) => {
+        this.apply(r);
+        this.editingArticle.set(null);
+        this.showForm.set(false);
+      });
   }
 
   onCancel(): void {
@@ -112,7 +108,28 @@ export class Blog {
       this.editingArticle.set(null);
       this.showForm.set(false);
     }
-    this.articles.update((list) => list.filter((a) => a.id !== id));
+    this.articlesData.remove(id).subscribe((r) => this.apply(r));
+  }
+
+  onPrevPage(): void {
+    const p = this.store.activePage();
+    if (p <= 1) {
+      return;
+    }
+    this.articlesData.goToPage(p - 1).subscribe((r) => this.apply(r));
+  }
+
+  onNextPage(): void {
+    const p = this.store.activePage();
+    if (p >= this.totalPages()) {
+      return;
+    }
+    this.articlesData.goToPage(p + 1).subscribe((r) => this.apply(r));
+  }
+
+  private apply(r: ArticlesQueryResult): void {
+    this.store.setArticles(r.articles);
+    this.store.setActivePage(r.activePage);
   }
 
   private scrollToForm(): void {

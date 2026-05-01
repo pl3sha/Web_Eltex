@@ -2,9 +2,14 @@
     <section class="blog-articles">
         <h1>Статьи</h1>
 
-        @if (articles().length > 0) {
+        @if (articlesLoading()) {
+            <div class="articles-loader" role="status" aria-live="polite">
+                <span class="loader-spinner" aria-hidden="true"></span>
+                <p class="loader-text">Загрузка...</p>
+            </div>
+        } @else if (totalCount() > 0) {
             <div class="articles-grid">
-                @for (article of articles(); track article.id) {
+                @for (article of visibleArticles(); track article.id) {
                     <app-blog-article-card
                         [article]="article"
                         (remove)="onRemove($event)"
@@ -16,10 +21,31 @@
             <p class="empty-state">Нет статей</p>
         }
 
+        @if (!articlesLoading() && totalCount() > 0 && totalPages() > 1) {
+            <nav class="pagination" aria-label="Страницы статей">
+                <button
+                    type="button"
+                    class="pagination-btn"
+                    [disabled]="activePage() <= 1"
+                    (click)="onPrevPage()">
+                    Назад
+                </button>
+                <span class="pagination-info">Страница {{ activePage() }} из {{ totalPages() }}</span>
+                <button
+                    type="button"
+                    class="pagination-btn"
+                    [disabled]="activePage() >= totalPages()"
+                    (click)="onNextPage()">
+                    Вперёд
+                </button>
+            </nav>
+        }
+
         <app-article-form
             #formEl
             [class.visible]="showForm()"
             [editingArticle]="editingArticle()"
+            [locked]="isSaving()"
             (submitArticle)="onSave($event)"
             (cancel)="onCancel()">
         </app-article-form>
@@ -32,7 +58,7 @@
 </app-admin-panel>
 
 <app-stats-dialog
-    [count]="articles().length"
+    [count]="totalCount()"
     [open]="showStats()"
     (close)="onCloseStats()">
 </app-stats-dialog>
