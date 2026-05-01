@@ -1,0 +1,12 @@
+<section class="education-section container">
+    <h2>Образование</h2>
+    <div class="career-list">
+        @for (item of items(); track item.title) {
+            <article>
+                <small>Образование</small>
+                <strong>{{ item.title }}</strong>
+                <p>{{ item.description }}</p>
+            </article>
+        }
+    </div>
+</section>

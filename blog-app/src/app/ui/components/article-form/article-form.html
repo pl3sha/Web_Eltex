@@ -28,7 +28,9 @@
     }
 
     <div class="form-buttons">
-        <button type="submit" class="btn-add" [disabled]="form.invalid">Сохранить</button>
-        <button type="button" class="btn-cancel" (click)="onCancel()">Отмена</button>
+        <button type="submit" class="btn-add" [disabled]="locked || form.invalid">
+            {{ locked ? 'Сохранение...' : 'Сохранить' }}
+        </button>
+        <button type="button" class="btn-cancel" [disabled]="locked" (click)="onCancel()">Отмена</button>
     </div>
 </form>

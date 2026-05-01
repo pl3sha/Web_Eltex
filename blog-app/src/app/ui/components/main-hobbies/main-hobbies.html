@@ -1,0 +1,14 @@
+<section class="hobby-section container">
+    <h2>Hobby projects</h2>
+    <p>{{ intro() }}</p>
+    <div class="hobby-grid">
+        @for (h of items(); track h.label) {
+            <div class="hobby-card">
+                <img [src]="h.image" [alt]="h.alt">
+                <div class="overlay">
+                    <p>{{ h.label }}</p>
+                </div>
+            </div>
+        }
+    </div>
+</section>
