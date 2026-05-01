@@ -1,0 +1,128 @@
+footer {
+    background: var(--bg-dark);
+    color: var(--white);
+    padding: 60px;
+    margin-top: 50px;
+}
+
+footer > div {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+footer h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--white);
+}
+
+footer address {
+    font-style: normal;
+    margin-bottom: 15px;
+}
+
+footer address p,
+footer p {
+    margin: 5px 0;
+    font-size: 15px;
+    color: var(--white);
+}
+
+footer a {
+    color: var(--accent-green);
+    text-decoration: underline;
+    transition: color 0.25s;
+}
+
+footer a:hover {
+    color: var(--accent-orange);
+}
+
+footer form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 350px;
+}
+
+footer form label {
+    font-size: 14px;
+    color: var(--light-gray);
+}
+
+footer form input,
+footer form textarea {
+    background: transparent;
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    padding: 12px 14px;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+}
+
+footer form input::placeholder,
+footer form textarea::placeholder {
+    color: var(--gray);
+}
+
+footer form button {
+    padding: 14px 35px;
+    background: var(--accent-green);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    align-self: flex-start;
+    transition: background 0.3s ease;
+}
+
+footer form button:hover {
+    background: #43a047;
+}
+
+footer > small {
+    display: block;
+    max-width: 1200px;
+    margin: 30px auto 0;
+    font-size: 13px;
+    color: var(--gray);
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-icons a {
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: var(--accent-green);
+}
+
+@media (max-width: 800px) {
+    footer {
+        padding: 40px 20px;
+    }
+
+    footer > div {
+        flex-direction: column;
+    }
+
+    footer form {
+        min-width: auto;
+    }
+}
