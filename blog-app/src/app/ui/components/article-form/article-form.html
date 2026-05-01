@@ -1,0 +1,24 @@
+<h2>Добавить статью</h2>
+<form #form="ngForm" class="article-form" (ngSubmit)="onSubmit(form)">
+    <label for="article-title">Заголовок</label>
+    <input
+        type="text"
+        id="article-title"
+        name="title"
+        placeholder="Заголовок статьи"
+        required
+        [(ngModel)]="title">
+
+    <label for="article-text">Текст статьи</label>
+    <textarea
+        id="article-text"
+        name="description"
+        placeholder="Текст статьи"
+        required
+        [(ngModel)]="description"></textarea>
+
+    <div class="form-buttons">
+        <button type="submit" class="btn-add" [disabled]="form.invalid">Сохранить</button>
+        <button type="button" class="btn-cancel" (click)="onCancel(form)">Отмена</button>
+    </div>
+</form>

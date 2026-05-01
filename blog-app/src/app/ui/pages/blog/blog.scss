@@ -1,0 +1,27 @@
+.blog-articles {
+    padding: 60px 0 50px;
+}
+
+.blog-articles > h1 {
+    margin-bottom: 30px;
+    color: var(--dark);
+}
+
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--gray);
+    font-size: 16px;
+    padding: 120px 20px;
+}
+
+@media (max-width: 800px) {
+    .articles-grid {
+        grid-template-columns: 1fr;
+    }
+}

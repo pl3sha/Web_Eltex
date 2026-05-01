@@ -1,0 +1,14 @@
+<dialog #dialogEl class="stats-dialog" (click)="onBackdropClick($event)" (close)="onClose()">
+    <button type="button" class="dialog-close" aria-label="Закрыть" (click)="onClose()">×</button>
+    <h2>Статистика страницы</h2>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span>Всего статей:</span>
+            <strong>{{ count() }}</strong>
+        </div>
+        <div class="stat-card">
+            <span>Комментарии:</span>
+            <strong>0</strong>
+        </div>
+    </div>
+</dialog>
