@@ -1,24 +1,34 @@
-<h2>Добавить статью</h2>
-<form #form="ngForm" class="article-form" (ngSubmit)="onSubmit(form)">
+<h2>{{ editingArticle() ? 'Изменить статью' : 'Добавить статью' }}</h2>
+<form [formGroup]="form" class="article-form" (ngSubmit)="onSubmit()">
     <label for="article-title">Заголовок</label>
     <input
         type="text"
         id="article-title"
-        name="title"
+        formControlName="title"
         placeholder="Заголовок статьи"
-        required
-        [(ngModel)]="title">
+        [class.invalid]="titleCtrl.invalid && (titleCtrl.touched || titleCtrl.dirty)">
+    @if (titleCtrl.invalid && (titleCtrl.touched || titleCtrl.dirty)) {
+        @if (titleCtrl.errors?.['required']) {
+            <small class="error">Заголовок обязателен</small>
+        } @else if (titleCtrl.errors?.['minlength']) {
+            <small class="error">Минимум 25 символов</small>
+        }
+    }
 
     <label for="article-text">Текст статьи</label>
     <textarea
         id="article-text"
-        name="description"
+        formControlName="description"
         placeholder="Текст статьи"
-        required
-        [(ngModel)]="description"></textarea>
+        [class.invalid]="descriptionCtrl.invalid && (descriptionCtrl.touched || descriptionCtrl.dirty)"></textarea>
+    @if (descriptionCtrl.invalid && (descriptionCtrl.touched || descriptionCtrl.dirty)) {
+        @if (descriptionCtrl.errors?.['required']) {
+            <small class="error">Текст статьи обязателен</small>
+        }
+    }
 
     <div class="form-buttons">
         <button type="submit" class="btn-add" [disabled]="form.invalid">Сохранить</button>
-        <button type="button" class="btn-cancel" (click)="onCancel(form)">Отмена</button>
+        <button type="button" class="btn-cancel" (click)="onCancel()">Отмена</button>
     </div>
 </form>

@@ -11,8 +11,13 @@ import { Article } from '../../../models/article';
 export class BlogArticleCard {
   @Input({ required: true }) article!: Article;
   @Output() remove = new EventEmitter<string>();
+  @Output() edit = new EventEmitter<Article>();
 
   onRemove(): void {
     this.remove.emit(this.article.id);
+  }
+
+  onEdit(): void {
+    this.edit.emit(this.article);
   }
 }

@@ -40,10 +40,10 @@ article p {
     font-size: 14px;
 }
 
-.btn-delete {
+.btn-delete,
+.btn-edit {
     position: absolute;
     top: 10px;
-    right: 10px;
     width: 32px;
     height: 32px;
     padding: 0;
@@ -51,7 +51,6 @@ article p {
     border-radius: 50%;
     background: rgba(45, 49, 66, 0.75);
     color: var(--white);
-    font-size: 22px;
     line-height: 1;
     cursor: pointer;
     display: flex;
@@ -63,13 +62,30 @@ article p {
     z-index: 5;
 }
 
+.btn-delete {
+    right: 10px;
+    font-size: 22px;
+}
+
+.btn-edit {
+    right: 50px;
+    font-size: 16px;
+}
+
 article:hover .btn-delete,
-.btn-delete:focus-visible {
+article:hover .btn-edit,
+.btn-delete:focus-visible,
+.btn-edit:focus-visible {
     opacity: 1;
     transform: scale(1);
 }
 
 .btn-delete:hover {
     background: var(--accent-orange);
+    transform: scale(1.08);
+}
+
+.btn-edit:hover {
+    background: var(--accent-green);
     transform: scale(1.08);
 }

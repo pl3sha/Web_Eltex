@@ -1,40 +1,76 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, EventEmitter, Output, effect, inject, input } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Article } from '../../../models/article';
 
 const DEFAULT_IMAGE = 'image/nature.jpg';
 
 @Component({
   selector: 'app-article-form',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './article-form.html',
   styleUrl: './article-form.scss',
 })
 export class ArticleForm {
+  readonly editingArticle = input<Article | null>(null);
+
   @Output() submitArticle = new EventEmitter<Article>();
   @Output() cancel = new EventEmitter<void>();
 
-  title = '';
-  description = '';
+  private readonly fb = inject(FormBuilder);
 
-  onSubmit(form: NgForm): void {
-    const title = this.title.trim();
-    const description = this.description.trim();
-    if (!title || !description) return;
+  readonly form = this.fb.nonNullable.group({
+    title: ['', [Validators.required, Validators.minLength(25)]],
+    description: ['', [Validators.required]],
+  });
 
-    this.submitArticle.emit({
-      id: this.generateId(),
-      title,
-      description,
-      date: new Date().toISOString().split('T')[0],
-      image: DEFAULT_IMAGE,
-    });
-
-    form.resetForm();
+  get titleCtrl() {
+    return this.form.controls.title;
   }
 
-  onCancel(form: NgForm): void {
-    form.resetForm();
+  get descriptionCtrl() {
+    return this.form.controls.description;
+  }
+
+  constructor() {
+    effect(() => {
+      const article = this.editingArticle();
+      if (article) {
+        this.form.reset({ title: article.title, description: article.description });
+      } else {
+        this.form.reset({ title: '', description: '' });
+      }
+    });
+  }
+
+  onSubmit(): void {
+    if (this.form.invalid) return;
+
+    const { title, description } = this.form.getRawValue();
+    const trimmedTitle = title.trim();
+    const trimmedDescription = description.trim();
+    const editing = this.editingArticle();
+
+    if (editing) {
+      this.submitArticle.emit({
+        ...editing,
+        title: trimmedTitle,
+        description: trimmedDescription,
+      });
+    } else {
+      this.submitArticle.emit({
+        id: this.generateId(),
+        title: trimmedTitle,
+        description: trimmedDescription,
+        date: new Date().toISOString().split('T')[0],
+        image: DEFAULT_IMAGE,
+      });
+    }
+
+    this.form.reset({ title: '', description: '' });
+  }
+
+  onCancel(): void {
+    this.form.reset({ title: '', description: '' });
     this.cancel.emit();
   }
 

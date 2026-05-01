@@ -65,15 +65,20 @@ export class Blog {
 
   readonly showForm = signal(false);
   readonly showStats = signal(false);
+  readonly editingArticle = signal<Article | null>(null);
 
   private readonly formEl = viewChild('formEl', { read: ElementRef });
 
   onCreate(): void {
+    this.editingArticle.set(null);
     this.showForm.set(true);
-    setTimeout(() => {
-      const el = this.formEl()?.nativeElement as HTMLElement | undefined;
-      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    this.scrollToForm();
+  }
+
+  onEdit(article: Article): void {
+    this.editingArticle.set(article);
+    this.showForm.set(true);
+    this.scrollToForm();
   }
 
   onShowStats(): void {
@@ -84,16 +89,32 @@ export class Blog {
     this.showStats.set(false);
   }
 
-  onAdd(article: Article): void {
-    this.articles.update((list) => [article, ...list]);
+  onSave(article: Article): void {
+    const editing = this.editingArticle();
+    if (editing) {
+      this.articles.update((list) =>
+        list.map((a) => (a.id === editing.id ? article : a)),
+      );
+    } else {
+      this.articles.update((list) => [article, ...list]);
+    }
+    this.editingArticle.set(null);
     this.showForm.set(false);
   }
 
   onCancel(): void {
+    this.editingArticle.set(null);
     this.showForm.set(false);
   }
 
   onRemove(id: string): void {
     this.articles.update((list) => list.filter((a) => a.id !== id));
+  }
+
+  private scrollToForm(): void {
+    setTimeout(() => {
+      const el = this.formEl()?.nativeElement as HTMLElement | undefined;
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }
 }
