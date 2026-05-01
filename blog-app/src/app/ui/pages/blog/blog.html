@@ -7,7 +7,8 @@
                 @for (article of articles(); track article.id) {
                     <app-blog-article-card
                         [article]="article"
-                        (remove)="onRemove($event)">
+                        (remove)="onRemove($event)"
+                        (edit)="onEdit($event)">
                     </app-blog-article-card>
                 }
             </div>
@@ -18,7 +19,8 @@
         <app-article-form
             #formEl
             [class.visible]="showForm()"
-            (submitArticle)="onAdd($event)"
+            [editingArticle]="editingArticle()"
+            (submitArticle)="onSave($event)"
             (cancel)="onCancel()">
         </app-article-form>
     </section>
