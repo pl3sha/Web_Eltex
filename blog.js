@@ -1,8 +1,11 @@
 const STORAGE_KEY = 'blog-articles';
 const DEFAULT_IMAGE = 'image/nature.jpg';
+const INITIAL_LOAD_DELAY_MS = 1000;
+const SUBMIT_DELAY_MS = 800;
 
 const articlesGrid = document.getElementById('articles-grid');
 const emptyState = document.getElementById('empty-state');
+const loader = document.getElementById('loader');
 const pagination = document.getElementById('pagination');
 const formSection = document.getElementById('article-form-section');
 const articleForm = document.getElementById('article-form');
@@ -21,7 +24,8 @@ const monthsRu = [
     'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
 ];
 
-let articles = loadArticles();
+let articles = [];
+let isBusy = false;
 
 function loadArticles() {
     try {
@@ -87,8 +91,28 @@ function render() {
         articlesGrid.append(createArticleElement(data));
     }
     const isEmpty = articles.length === 0;
+    articlesGrid.hidden = isEmpty;
     emptyState.hidden = !isEmpty;
     if (pagination) pagination.hidden = isEmpty;
+}
+
+function showLoader() {
+    loader.hidden = false;
+    articlesGrid.hidden = true;
+    emptyState.hidden = true;
+    if (pagination) pagination.hidden = true;
+}
+
+function hideLoader() {
+    loader.hidden = true;
+}
+
+function setFormDisabled(disabled) {
+    isBusy = disabled;
+    for (const el of articleForm.elements) {
+        el.disabled = disabled;
+    }
+    btnCreate.disabled = disabled;
 }
 
 function addArticle(data) {
@@ -98,12 +122,24 @@ function addArticle(data) {
 }
 
 function removeArticle(id) {
+    if (isBusy) return;
     articles = articles.filter((a) => a.id !== id);
     saveArticles();
     render();
 }
 
-render();
+function init() {
+    showLoader();
+    setFormDisabled(true);
+    setTimeout(() => {
+        articles = loadArticles();
+        hideLoader();
+        render();
+        setFormDisabled(false);
+    }, INITIAL_LOAD_DELAY_MS);
+}
+
+init();
 
 btnCreate.addEventListener('click', () => {
     formSection.classList.add('visible');
@@ -127,21 +163,33 @@ statsDialog.addEventListener('click', (e) => {
     if (e.target === statsDialog) statsDialog.close();
 });
 
+const submitBtn = articleForm.querySelector('button[type="submit"]');
+
 articleForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    if (isBusy) return;
 
     const title = titleInput.value.trim();
     const text = textInput.value.trim();
     if (!title || !text) return;
 
-    addArticle({
+    const newArticle = {
         id: generateId(),
         title,
         text,
         date: new Date().toISOString().split('T')[0],
         image: DEFAULT_IMAGE
-    });
+    };
 
-    articleForm.reset();
-    formSection.classList.remove('visible');
+    const originalLabel = submitBtn.textContent;
+    submitBtn.textContent = 'Сохранение...';
+    setFormDisabled(true);
+
+    setTimeout(() => {
+        addArticle(newArticle);
+        articleForm.reset();
+        formSection.classList.remove('visible');
+        setFormDisabled(false);
+        submitBtn.textContent = originalLabel;
+    }, SUBMIT_DELAY_MS);
 });
