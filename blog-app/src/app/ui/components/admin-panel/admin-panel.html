@@ -1,4 +1,8 @@
 <aside class="admin-panel">
-    <button type="button" class="admin-btn" title="Создать статью" aria-label="Создать статью" (click)="onCreate()">+</button>
-    <button type="button" class="admin-btn" title="Показать статистику" aria-label="Показать статистику" (click)="onStats()">&#8801;</button>
+    <button mat-icon-button class="admin-btn" title="Создать статью" aria-label="Создать статью" (click)="onCreate()">
+        <mat-icon>add_circle</mat-icon>
+    </button>
+    <button mat-icon-button class="admin-btn" title="Показать статистику" aria-label="Показать статистику" (click)="onStats()">
+        <mat-icon>bar_chart</mat-icon>
+    </button>
 </aside>

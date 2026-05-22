@@ -1,0 +1,20 @@
+<mat-card class="comment-card">
+    <mat-card-header>
+        <mat-card-title>{{ comment.authorName }}</mat-card-title>
+        <mat-card-subtitle>
+            <time [attr.datetime]="comment.date">{{ comment.date | date:'d MMMM y':'':'ru' }}</time>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p class="comment-text">{{ comment.text }}</p>
+    </mat-card-content>
+    <mat-card-actions class="comment-rating">
+        <button mat-icon-button aria-label="Повысить рейтинг" (click)="onUp()">
+            <mat-icon>thumb_up</mat-icon>
+        </button>
+        <span class="rating-value">{{ comment.rating }}</span>
+        <button mat-icon-button aria-label="Понизить рейтинг" (click)="onDown()">
+            <mat-icon>thumb_down</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>

@@ -1,0 +1,27 @@
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 28px;
+    background: var(--bg-light);
+    border-radius: 12px;
+    margin-top: 24px;
+}
+
+.form-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 12px;
+}
+
+.form-field {
+    width: 100%;
+}
+
+.submit-btn {
+    align-self: flex-start;
+    background-color: var(--accent-green) !important;
+    color: var(--white) !important;
+    gap: 6px;
+}
