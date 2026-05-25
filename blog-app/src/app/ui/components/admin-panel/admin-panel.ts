@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-admin-panel',
-  imports: [],
+  imports: [MatIconButton, MatIcon],
   templateUrl: './admin-panel.html',
   styleUrl: './admin-panel.scss',
 })

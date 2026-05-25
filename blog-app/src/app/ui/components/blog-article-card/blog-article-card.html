@@ -1,6 +1,10 @@
-<article>
-    <button type="button" class="btn-edit" aria-label="Редактировать статью" title="Редактировать статью" (click)="onEdit()">✎</button>
-    <button type="button" class="btn-delete" aria-label="Удалить статью" title="Удалить статью" (click)="onRemove()">×</button>
+<article [routerLink]="['/blog', article.id]">
+    <button type="button" class="btn-edit" aria-label="Редактировать статью" title="Редактировать статью" (click)="onEdit($event)">
+        <mat-icon>edit</mat-icon>
+    </button>
+    <button type="button" class="btn-delete" aria-label="Удалить статью" title="Удалить статью" (click)="onRemove($event)">
+        <mat-icon>delete</mat-icon>
+    </button>
     <img [src]="article.image" [alt]="article.title">
     <h3>{{ article.title }}</h3>
     <small><time [attr.datetime]="article.date">{{ article.date | date:'d MMMM y':'':'ru' }}</time></small>

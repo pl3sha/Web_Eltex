@@ -1,5 +1,6 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { ArticlesQueryResult } from '../../../services/articles/articles-service.interface';
 import { ARTICLES_DATA_SERVICE } from '../../../services/articles/articles-service.token';
 import { ArticlesStoreService } from '../../../services/articles/articles-store.service';
@@ -27,6 +28,7 @@ import { MainWork, MainWorkItem } from '../../components/main-work/main-work';
 export class Main implements OnInit {
   private readonly store = inject(ArticlesStoreService);
   private readonly articlesData = inject(ARTICLES_DATA_SERVICE);
+  private readonly title = inject(Title);
 
   readonly skillItems: MainSkillItem[] = [
     { text: 'HTML5, CSS3, базовый JavaScript' },
@@ -78,6 +80,7 @@ export class Main implements OnInit {
   });
 
   ngOnInit(): void {
+    this.title.setTitle('Name-folio');
     this.articlesData.fetch().subscribe((r) => this.apply(r));
   }
 

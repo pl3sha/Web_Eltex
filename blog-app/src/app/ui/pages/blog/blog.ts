@@ -1,6 +1,7 @@
 import { Component, ElementRef, computed, inject, OnInit, signal, viewChild } from '@angular/core';
 import { delay, finalize, switchMap } from 'rxjs/operators';
 import { timer } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 import { Article } from '../../../models/article';
 import { ArticlesQueryResult } from '../../../services/articles/articles-service.interface';
 import { ARTICLES_DATA_SERVICE } from '../../../services/articles/articles-service.token';
@@ -11,7 +12,6 @@ import { ArticleForm } from '../../components/article-form/article-form';
 import { BlogArticleCard } from '../../components/blog-article-card/blog-article-card';
 import { StatsDialog } from '../../components/stats-dialog/stats-dialog';
 
-/** Имитация загрузки и сохранения — как в статическом blog.js */
 const INITIAL_LOAD_DELAY_MS = 1000;
 const SUBMIT_DELAY_MS = 800;
 
@@ -24,6 +24,7 @@ const SUBMIT_DELAY_MS = 800;
 export class Blog implements OnInit {
   private readonly store = inject(ArticlesStoreService);
   private readonly articlesData = inject(ARTICLES_DATA_SERVICE);
+  private readonly title = inject(Title);
 
   readonly showForm = signal(false);
   readonly showStats = signal(false);
@@ -49,6 +50,7 @@ export class Blog implements OnInit {
   readonly activePage = computed(() => this.store.activePage());
 
   ngOnInit(): void {
+    this.title.setTitle('Блог — Name-folio');
     timer(INITIAL_LOAD_DELAY_MS)
       .pipe(
         switchMap(() => this.articlesData.fetch()),

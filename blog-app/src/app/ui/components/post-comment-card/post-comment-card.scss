@@ -1,0 +1,25 @@
+.comment-card {
+    margin-bottom: 16px;
+}
+
+.comment-text {
+    margin-top: 8px;
+    color: var(--gray);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.comment-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px 8px;
+}
+
+.rating-value {
+    font-size: 15px;
+    font-weight: 700;
+    min-width: 28px;
+    text-align: center;
+    color: var(--dark);
+}

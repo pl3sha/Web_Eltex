@@ -1,0 +1,60 @@
+<main class="container">
+    <section class="post-section">
+        @if (article()) {
+            <button mat-icon-button class="back-btn" aria-label="Назад к списку" (click)="onBack()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+
+            <article class="post-article">
+                <div class="post-image-wrap">
+                    @if (article()!.image) {
+                        <img [src]="article()!.image" [alt]="article()!.title" class="post-image">
+                    } @else {
+                        <div class="post-image-placeholder" aria-hidden="true">
+                            <mat-icon>image</mat-icon>
+                        </div>
+                    }
+                </div>
+
+                <div class="post-meta">
+                    <small>
+                        <time [attr.datetime]="article()!.date">
+                            {{ article()!.date | date:'d MMMM y':'':'ru' }}
+                        </time>
+                    </small>
+                </div>
+
+                <h1 class="post-title">{{ article()!.title }}</h1>
+                <p class="post-description">{{ article()!.description }}</p>
+
+                <div class="post-rating">
+                    <span class="rating-label">Рейтинг:</span>
+                    <button mat-icon-button aria-label="Повысить рейтинг" (click)="onRatingUp()">
+                        <mat-icon>thumb_up</mat-icon>
+                    </button>
+                    <span class="rating-value">{{ article()!.rating ?? 0 }}</span>
+                    <button mat-icon-button aria-label="Понизить рейтинг" (click)="onRatingDown()">
+                        <mat-icon>thumb_down</mat-icon>
+                    </button>
+                </div>
+            </article>
+
+            <section class="comments-section">
+                <h2 class="comments-title">Комментарии</h2>
+
+                @if (comments().length > 0) {
+                    @for (comment of comments(); track comment.id) {
+                        <app-post-comment-card
+                            [comment]="comment"
+                            (ratingChange)="onCommentRatingChange(comment.id, $event)">
+                        </app-post-comment-card>
+                    }
+                } @else {
+                    <p class="no-comments">Комментариев пока нет. Будьте первым!</p>
+                }
+
+                <app-post-comment-form (submitComment)="onAddComment($event)"></app-post-comment-form>
+            </section>
+        }
+    </section>
+</main>
