@@ -12,13 +12,14 @@ import { AdminPanel } from '../../components/admin-panel/admin-panel';
 import { ArticleForm } from '../../components/article-form/article-form';
 import { BlogArticleCard } from '../../components/blog-article-card/blog-article-card';
 import { StatsDialog } from '../../components/stats-dialog/stats-dialog';
+import { HasRoleDirective } from '../../../directives/has-role.directive';
 
 const INITIAL_LOAD_DELAY_MS = 1000;
 const SUBMIT_DELAY_MS = 800;
 
 @Component({
   selector: 'app-blog',
-  imports: [BlogArticleCard, ArticleForm, AdminPanel, StatsDialog],
+  imports: [BlogArticleCard, ArticleForm, AdminPanel, StatsDialog, HasRoleDirective],
   templateUrl: './blog.html',
   styleUrl: './blog.scss',
 })

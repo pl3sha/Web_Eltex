@@ -3,10 +3,11 @@ import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { Article } from '../../../models/article';
+import { HasRoleDirective } from '../../../directives/has-role.directive';
 
 @Component({
   selector: 'app-blog-article-card',
-  imports: [DatePipe, RouterLink, MatIcon],
+  imports: [DatePipe, RouterLink, MatIcon, HasRoleDirective],
   templateUrl: './blog-article-card.html',
   styleUrl: './blog-article-card.scss',
 })

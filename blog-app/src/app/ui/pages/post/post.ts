@@ -14,6 +14,7 @@ import {
 import { POST_DATA_SERVICE } from '../../../services/post/post-service.token';
 import { PostStoreService } from '../../../services/post/post-store.service';
 import { EventsWebSocketService } from '../../../services/websocket/events-websocket.service';
+import { AuthStoreService } from '../../../services/auth/auth-store.service';
 import { PostCommentCard } from '../../components/post-comment-card/post-comment-card';
 import { PostCommentForm } from '../../components/post-comment-form/post-comment-form';
 
@@ -30,11 +31,13 @@ export class Post implements OnInit, OnDestroy {
   private readonly store = inject(PostStoreService);
   private readonly postData = inject(POST_DATA_SERVICE);
   private readonly eventsWs = inject(EventsWebSocketService);
+  private readonly authStore = inject(AuthStoreService);
 
   private articleId: string | null = null;
 
   readonly article = this.store.article;
   readonly comments = this.store.comments;
+  readonly isLoggedIn = this.authStore.isLoggedIn;
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

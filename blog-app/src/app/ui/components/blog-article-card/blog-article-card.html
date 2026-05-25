@@ -1,8 +1,8 @@
 <article [routerLink]="['/blog', article.id]">
-    <button type="button" class="btn-edit" aria-label="Редактировать статью" title="Редактировать статью" (click)="onEdit($event)">
+    <button *appHasRole="'admin'" type="button" class="btn-edit" aria-label="Редактировать статью" title="Редактировать статью" (click)="onEdit($event)">
         <mat-icon>edit</mat-icon>
     </button>
-    <button type="button" class="btn-delete" aria-label="Удалить статью" title="Удалить статью" (click)="onRemove($event)">
+    <button *appHasRole="'admin'" type="button" class="btn-delete" aria-label="Удалить статью" title="Удалить статью" (click)="onRemove($event)">
         <mat-icon>delete</mat-icon>
     </button>
     <img [src]="article.image" [alt]="article.title">
