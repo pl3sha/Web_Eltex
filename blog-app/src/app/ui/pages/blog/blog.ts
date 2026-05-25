@@ -2,6 +2,7 @@ import { Component, ElementRef, computed, inject, OnInit, signal, viewChild } fr
 import { delay, finalize, switchMap } from 'rxjs/operators';
 import { timer } from 'rxjs';
 import { Title } from '@angular/platform-browser';
+import { environment } from '../../../../environments/environment';
 import { Article } from '../../../models/article';
 import { ArticlesQueryResult } from '../../../services/articles/articles-service.interface';
 import { ARTICLES_DATA_SERVICE } from '../../../services/articles/articles-service.token';
@@ -36,15 +37,20 @@ export class Blog implements OnInit {
 
   readonly visibleArticles = computed(() => {
     const all = this.store.articles();
+    if (environment.useBackend) {
+      return all;
+    }
     const page = this.store.activePage();
     const start = (page - 1) * ARTICLES_PAGE_SIZE;
     return all.slice(start, start + ARTICLES_PAGE_SIZE);
   });
 
-  readonly totalCount = computed(() => this.store.articles().length);
+  readonly totalCount = computed(() =>
+    environment.useBackend ? this.store.total() : this.store.articles().length,
+  );
 
   readonly totalPages = computed(() =>
-    Math.max(1, Math.ceil(this.store.articles().length / ARTICLES_PAGE_SIZE)),
+    Math.max(1, Math.ceil(this.totalCount() / ARTICLES_PAGE_SIZE)),
   );
 
   readonly activePage = computed(() => this.store.activePage());
@@ -132,6 +138,7 @@ export class Blog implements OnInit {
   private apply(r: ArticlesQueryResult): void {
     this.store.setArticles(r.articles);
     this.store.setActivePage(r.activePage);
+    this.store.setTotal(r.total);
   }
 
   private scrollToForm(): void {
