@@ -1,0 +1,22 @@
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 280px;
+}
+
+.form-field {
+    width: 100%;
+}
+
+.auth-error {
+    margin: 8px 0 0;
+    color: var(--error);
+    font-size: 13px;
+}
+
+@media (max-width: 800px) {
+    .auth-form {
+        min-width: 240px;
+    }
+}

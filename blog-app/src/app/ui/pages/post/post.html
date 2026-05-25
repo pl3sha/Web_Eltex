@@ -53,7 +53,9 @@
                     <p class="no-comments">Комментариев пока нет. Будьте первым!</p>
                 }
 
-                <app-post-comment-form (submitComment)="onAddComment($event)"></app-post-comment-form>
+                @if (isLoggedIn()) {
+                    <app-post-comment-form (submitComment)="onAddComment($event)"></app-post-comment-form>
+                }
             </section>
         }
     </section>

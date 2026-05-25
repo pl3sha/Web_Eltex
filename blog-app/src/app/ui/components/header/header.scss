@@ -40,6 +40,26 @@ header nav ul {
     font-weight: 700;
 }
 
+.auth-item {
+    list-style: none;
+}
+
+.login-btn {
+    min-width: 80px;
+}
+
+.user-btn .mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+}
+
+.user-menu-info {
+    padding: 8px 16px;
+    font-size: 14px;
+    color: var(--gray);
+}
+
 @media (max-width: 800px) {
     header {
         padding: 15px 20px;

@@ -11,6 +11,23 @@
             <li>
                 <a class="nav-link" href="/" (click)="scrollToContacts($event)">Контакты</a>
             </li>
+            <li class="auth-item">
+                @if (isLoggedIn()) {
+                    <button
+                        mat-icon-button
+                        class="user-btn"
+                        [matMenuTriggerFor]="userMenu"
+                        aria-label="Меню пользователя">
+                        <mat-icon>account_circle</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+                        <div class="user-menu-info">Пользователь: {{ user()?.username }}</div>
+                        <button mat-menu-item (click)="onLogout()">Выход</button>
+                    </mat-menu>
+                } @else {
+                    <button mat-flat-button class="login-btn" (click)="openLoginDialog()">Вход</button>
+                }
+            </li>
         </ul>
     </nav>
 </header>

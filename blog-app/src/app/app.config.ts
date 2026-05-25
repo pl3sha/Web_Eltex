@@ -1,7 +1,7 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, APP_INITIALIZER, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { InMemoryCache } from '@apollo/client/core';
 import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
@@ -18,6 +18,11 @@ import { POST_DATA_SERVICE } from './services/post/post-service.token';
 import { PostService } from './services/post/post.service';
 import { PostGraphqlService } from './services/post/post-graphql.service';
 import { PostMapperService } from './services/post/post-mapper.service';
+import { AUTH_SERVICE } from './services/auth/auth-service.token';
+import { AuthService } from './services/auth/auth.service';
+import { AuthApiService } from './services/auth/auth-api.service';
+import { authInterceptor } from './services/auth/auth.interceptor';
+import { IAuthService } from './services/auth/auth-service.interface';
 
 export function apolloOptionsFactory(httpLink: HttpLink) {
   return {
@@ -26,11 +31,15 @@ export function apolloOptionsFactory(httpLink: HttpLink) {
   };
 }
 
+export function initAuth(auth: IAuthService): () => void {
+  return () => auth.restoreSession();
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideAnimationsAsync(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideRouter(
       routes,
       withInMemoryScrolling({
@@ -63,5 +72,19 @@ export const appConfig: ApplicationConfig = {
     },
     PostGraphqlService,
     PostMapperService,
+    {
+      provide: AUTH_SERVICE,
+      useFactory: (local: AuthService, api: AuthApiService) =>
+        environment.useBackend ? api : local,
+      deps: [AuthService, AuthApiService],
+    },
+    AuthService,
+    AuthApiService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initAuth,
+      deps: [AUTH_SERVICE],
+      multi: true,
+    },
   ],
 };
