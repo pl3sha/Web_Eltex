@@ -2,6 +2,9 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
+import { InMemoryCache } from '@apollo/client/core';
+import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
 
 import { routes } from './app.routes';
 import { environment } from '../environments/environment';
@@ -13,6 +16,15 @@ import { ArticleMapperService } from './services/articles/article-mapper.service
 import { CategoryApiService } from './services/categories/category.service';
 import { POST_DATA_SERVICE } from './services/post/post-service.token';
 import { PostService } from './services/post/post.service';
+import { PostGraphqlService } from './services/post/post-graphql.service';
+import { PostMapperService } from './services/post/post-mapper.service';
+
+export function apolloOptionsFactory(httpLink: HttpLink) {
+  return {
+    link: httpLink.create({ uri: environment.graphqlUrl || '/graphql' }),
+    cache: new InMemoryCache(),
+  };
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +39,12 @@ export const appConfig: ApplicationConfig = {
       }),
     ),
     {
+      provide: APOLLO_OPTIONS,
+      useFactory: apolloOptionsFactory,
+      deps: [HttpLink],
+    },
+    Apollo,
+    {
       provide: ARTICLES_DATA_SERVICE,
       useFactory: (
         store: ArticlesStoreService,
@@ -39,7 +57,11 @@ export const appConfig: ApplicationConfig = {
     CategoryApiService,
     {
       provide: POST_DATA_SERVICE,
-      useClass: PostService,
+      useFactory: (local: PostService, graphql: PostGraphqlService) =>
+        environment.useBackend ? graphql : local,
+      deps: [PostService, PostGraphqlService],
     },
+    PostGraphqlService,
+    PostMapperService,
   ],
 };
