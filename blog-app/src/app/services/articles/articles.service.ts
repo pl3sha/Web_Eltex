@@ -31,7 +31,7 @@ export class ArticlesService implements IArticlesDataService {
   }
 
   add(article: Article): Observable<ArticlesQueryResult> {
-    const all = [article, ...this.getAllFromStoreOrLs()];
+    const all = [this.toStored(article), ...this.getAllFromStoreOrLs()];
     this.writeArticlesToStorage(all);
     const page = 1;
     this.writePageToStorage(page);
@@ -39,7 +39,8 @@ export class ArticlesService implements IArticlesDataService {
   }
 
   update(article: Article): Observable<ArticlesQueryResult> {
-    const all = this.getAllFromStoreOrLs().map((a) => (a.id === article.id ? article : a));
+    const stored = this.toStored(article);
+    const all = this.getAllFromStoreOrLs().map((a) => (a.id === stored.id ? stored : a));
     this.writeArticlesToStorage(all);
     let page = this.store.activePage();
     const totalPages = Math.max(1, Math.ceil(all.length / this.pageSize));
@@ -125,5 +126,10 @@ export class ArticlesService implements IArticlesDataService {
       total: all.length,
       activePage,
     };
+  }
+
+  private toStored(article: Article): Article {
+    const { imageFile, ...rest } = article;
+    return rest;
   }
 }

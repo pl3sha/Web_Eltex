@@ -87,5 +87,6 @@ export class Main implements OnInit {
   private apply(r: ArticlesQueryResult): void {
     this.store.setArticles(r.articles);
     this.store.setActivePage(r.activePage);
+    this.store.setTotal(r.total);
   }
 }

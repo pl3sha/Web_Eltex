@@ -8,7 +8,7 @@
 }
 
 :host(.visible) {
-    max-height: 700px;
+    max-height: 1100px;
     opacity: 1;
     padding: 50px 0 40px;
 }
@@ -114,4 +114,17 @@ h2 {
 
 .btn-add:disabled:hover {
     background: var(--accent-green);
+}
+
+.category-field {
+    width: 100%;
+}
+
+.image-preview {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-top: 4px;
 }

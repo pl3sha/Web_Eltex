@@ -5,4 +5,7 @@ export interface Article {
   date: string;
   image: string;
   rating?: number;
+  categoryId?: string;
+  categoryName?: string;
+  imageFile?: File | null;
 }
